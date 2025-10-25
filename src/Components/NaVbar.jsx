@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router";
 import { Sun, Moon, Menu, X } from "lucide-react";
 
 const Navbar = () => {
@@ -19,43 +20,37 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "Courses", href: "#courses" },
-    { name: "About Us", href: "#about" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", path: "/home" },
+    { name: "Courses", path: "/courses" },
+    { name: "About Us", path: "/about" },
+    { name: "Pricing", path: "/pricing" },
+    { name: "Contact", path: "/contact" },
   ];
 
   return (
     <nav className="sticky top-0 z-50 bg-base-100/80 backdrop-blur-lg border-b border-base-300 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <div className="flex-shrink-0">
-            <a
-              href="#"
+            <NavLink
+              to="/"
               className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hover:scale-105 transition-transform duration-200"
             >
               Learn<span className="text-accent">Coding</span>
-            </a>
+            </NavLink>
           </div>
-
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
             {navLinks.map((link) => (
-              <a
+              <NavLink
                 key={link.name}
-                href={link.href}
-                className="px-4 py-2 rounded-lg text-base-content hover:bg-base-200 hover:text-primary transition-all duration-200 font-medium"
+                to={link.path}
+                className="nav-link px-4 py-2 rounded-lg font-medium"
               >
                 {link.name}
-              </a>
+              </NavLink>
             ))}
           </div>
-
-          {/* Right Side - Theme Toggle & CTA */}
           <div className="hidden md:flex items-center space-x-4">
-            {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
               className="btn btn-ghost btn-circle swap swap-rotate"
@@ -67,17 +62,13 @@ const Navbar = () => {
                 <Sun className="w-5 h-5" />
               )}
             </button>
-
-            {/* CTA Button */}
-            <a
-              href="#enroll"
+            <NavLink
+              to="/enroll"
               className="btn btn-primary hover:scale-105 transition-transform duration-200 shadow-lg"
             >
               Enroll Now
-            </a>
+            </NavLink>
           </div>
-
-          {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center space-x-2">
             <button
               onClick={toggleTheme}
@@ -104,8 +95,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-
-      {/* Mobile Menu */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
           isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
@@ -113,22 +102,22 @@ const Navbar = () => {
       >
         <div className="px-4 pt-2 pb-4 space-y-2 bg-base-100 border-t border-base-300">
           {navLinks.map((link) => (
-            <a
+            <NavLink
               key={link.name}
-              href={link.href}
-              className="block px-4 py-3 rounded-lg text-base-content hover:bg-base-200 hover:text-primary transition-all duration-200 font-medium"
+              to={link.path}
+              className="nav-link-mobile block px-4 py-3 rounded-lg font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
               {link.name}
-            </a>
+            </NavLink>
           ))}
-          <a
-            href="#enroll"
-            className="block btn btn-primary w-full mt-4"
+          <NavLink
+            to="/enroll"
+            className=" btn btn-primary w-full "
             onClick={() => setIsMenuOpen(false)}
           >
             Enroll Now
-          </a>
+          </NavLink>
         </div>
       </div>
     </nav>
