@@ -10,7 +10,9 @@ import {
   ArrowLeft,
   CheckCircle,
   Star,
+  ShoppingCart,
 } from "lucide-react";
+import toast from "react-hot-toast";
 
 const CourseDetails = () => {
   const { id } = useParams();
@@ -18,6 +20,8 @@ const CourseDetails = () => {
   const [course, setCourse] = useState(null);
   const [teacher, setTeacher] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isInCart, setIsInCart] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +38,17 @@ const CourseDetails = () => {
 
         setCourse(selectedCourse);
         setTeacher(selectedTeacher);
+
+        // Check if course is already in cart
+        const enrolledCourses = JSON.parse(
+          localStorage.getItem("enrolledCourses") || "[]"
+        );
+        const courseExists = enrolledCourses.some(
+          (c) => c.id === selectedCourse?.id
+        );
+        setIsInCart(courseExists);
+        setCartCount(enrolledCourses.length);
+
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -43,6 +58,46 @@ const CourseDetails = () => {
 
     fetchData();
   }, [id]);
+
+  const handleEnrollNow = () => {
+    if (!course) return;
+
+    // Get existing enrolled courses from localStorage
+    const enrolledCourses = JSON.parse(
+      localStorage.getItem("enrolledCourses") || "[]"
+    );
+
+    // Check if course is already enrolled
+    const courseExists = enrolledCourses.some((c) => c.id === course.id);
+
+    if (courseExists) {
+      toast.error("Course already in cart!", {
+        icon: "🛒",
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+      return;
+    }
+
+    // Add course to enrolled courses
+    const updatedCourses = [...enrolledCourses, course];
+    localStorage.setItem("enrolledCourses", JSON.stringify(updatedCourses));
+    setIsInCart(true);
+    setCartCount(updatedCourses.length);
+
+    // Show success toast
+    toast.success("Course added to cart!", {
+      icon: "✅",
+      style: {
+        borderRadius: "10px",
+        background: "#10b981",
+        color: "#fff",
+      },
+    });
+  };
 
   if (loading) {
     return (
@@ -71,13 +126,28 @@ const CourseDetails = () => {
   return (
     <div className="min-h-screen bg-base-100 py-6 sm:py-8 lg:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <button
-          onClick={() => navigate("/courses")}
-          className="btn btn-ghost btn-sm mb-4 sm:mb-6 gap-2"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Courses
-        </button>
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
+          <button
+            onClick={() => navigate("/courses")}
+            className="btn btn-ghost btn-sm gap-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Courses
+          </button>
+
+          {cartCount > 0 && (
+            <button
+              onClick={() => navigate("/pricing")}
+              className="btn btn-primary btn-sm gap-2 relative"
+            >
+              <ShoppingCart className="w-4 h-4" />
+              Go to Cart
+              <span className="badge badge-secondary badge-sm absolute -top-2 -right-2">
+                {cartCount}
+              </span>
+            </button>
+          )}
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           <div className="lg:col-span-2 space-y-6">
@@ -182,9 +252,35 @@ const CourseDetails = () => {
                   </div>
                 </div>
 
-                <button className="btn btn-primary btn-block btn-lg mb-4 hover:scale-105 transition-transform duration-200">
-                  Enroll Now
+                <button
+                  onClick={handleEnrollNow}
+                  className={`btn btn-block btn-lg mb-4 hover:scale-105 transition-transform duration-200 gap-2 ${
+                    isInCart ? "btn-success" : "btn-primary"
+                  }`}
+                  disabled={isInCart}
+                >
+                  {isInCart ? (
+                    <>
+                      <CheckCircle className="w-5 h-5" />
+                      Added to Cart
+                    </>
+                  ) : (
+                    <>
+                      <ShoppingCart className="w-5 h-5" />
+                      Add to Cart
+                    </>
+                  )}
                 </button>
+
+                {isInCart && (
+                  <button
+                    onClick={() => navigate("/pricing")}
+                    className="btn btn-primary btn-block btn-lg mb-4 hover:scale-105 transition-transform duration-200 gap-2"
+                  >
+                    <ShoppingCart className="w-5 h-5" />
+                    Go to Checkout
+                  </button>
+                )}
                 <button className="btn btn-outline btn-block">
                   Add to Wishlist
                 </button>
