@@ -63,7 +63,7 @@ const Navbar = () => {
               )}
             </button>
             <NavLink
-              to="/enroll"
+              to="/courses"
               className="btn btn-primary hover:scale-105 transition-transform duration-200 shadow-lg"
             >
               Enroll Now
@@ -112,7 +112,7 @@ const Navbar = () => {
             </NavLink>
           ))}
           <NavLink
-            to="/enroll"
+            to="/courses"
             className=" btn btn-primary w-full "
             onClick={() => setIsMenuOpen(false)}
           >

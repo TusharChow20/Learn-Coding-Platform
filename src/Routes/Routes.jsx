@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router";
 import RootLayout from "../Layout/RootLayout";
 import Courses from "../Pages/Courses";
-import About from "../Pages/About";
 import Pricing from "../Pages/Pricing";
 import Contact from "../Pages/Contact";
 import Home from "../Pages/Home";
 import axios from "axios";
+import CourseDetails from "../Pages/CourseDetails";
+import AboutUs from "../Pages/AboutUs";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
-        Component: About,
+        Component: AboutUs,
       },
       {
         path: "/pricing",
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         Component: Contact,
+      },
+      {
+        path: "/courseDetails/:id",
+        Component: CourseDetails,
       },
     ],
   },
