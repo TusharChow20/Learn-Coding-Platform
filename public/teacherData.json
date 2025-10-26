@@ -10,35 +10,35 @@
     "id": 2,
     "name": "Nabil Hasan",
     "designation": "Backend Engineer",
-    "expertise": "Node.js, Express, MongoDB, REST APIs",
+    "expertise": "Node.js, Express, MongoDB",
     "image": "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=600"
   },
   {
     "id": 3,
     "name": "Farhana Chowdhury",
     "designation": "Data Scientist",
-    "expertise": "Python, Pandas, Machine Learning, TensorFlow",
+    "expertise": "Python, Machine Learning, TensorFlow",
     "image": "https://images.pexels.com/photos/1181424/pexels-photo-1181424.jpeg?auto=compress&cs=tinysrgb&w=600"
   },
   {
     "id": 4,
     "name": "Rafiul Karim",
     "designation": "Mobile App Developer",
-    "expertise": "Flutter, Dart, Firebase, UI/UX Design",
+    "expertise": "Flutter, Dart, Firebase",
     "image": "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=600"
   },
   {
     "id": 5,
     "name": "Tania Ahmed",
     "designation": "Cybersecurity Analyst",
-    "expertise": "Network Security, Ethical Hacking, Linux, Cryptography",
+    "expertise": "Ethical Hacking, Linux, Cryptography",
     "image": "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=600"
   },
   {
     "id": 6,
     "name": "Shahriar Hossain",
     "designation": "AI & Deep Learning Specialist",
-    "expertise": "Neural Networks, Computer Vision, NLP, PyTorch",
+    "expertise": "Neural Networks, Computer Vision",
     "image": "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=600"
   }
 ]

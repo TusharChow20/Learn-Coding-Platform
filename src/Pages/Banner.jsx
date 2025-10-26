@@ -29,14 +29,12 @@ const TypingText = ({ text, speed = 100, className = "", wordPause = 0 }) => {
 };
 
 const Banner = ({ data }) => {
-  const mainText = "Master in Coding";
   const descriptionText =
     "Learn programming from industry experts. Build real-world projects and advance your career with our comprehensive coding courses.";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-        {/* LEFT SIDE - Text Content */}
         <div className="space-y-6 lg:space-y-8 text-center lg:text-left order-2 lg:order-1">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-relaxed text-white min-h-[200px] sm:min-h-[250px]">
             <TypingText
@@ -71,8 +69,6 @@ const Banner = ({ data }) => {
             </button>
           </div>
         </div>
-
-        {/* RIGHT SIDE - Coverflow Slider */}
         <div className="order-1 lg:order-2">
           <Swiper
             effect="coverflow"
@@ -85,7 +81,7 @@ const Banner = ({ data }) => {
               disableOnInteraction: false,
             }}
             coverflowEffect={{
-              rotate: 50,
+              rotate: 80,
               stretch: 0,
               depth: 100,
               modifier: 1,
@@ -99,7 +95,7 @@ const Banner = ({ data }) => {
             className="w-full py-12 pb-16"
           >
             {data &&
-              data.slice(0, 6).map((item, index) => (
+              data.map((item, index) => (
                 <SwiperSlide
                   key={index}
                   className="flex justify-center"
@@ -113,17 +109,12 @@ const Banner = ({ data }) => {
                         className="w-full h-full object-cover"
                       />
                     </div>
-
-                    {/* Name and Expertise Below Image */}
-                    <div className="mt-4 text-center px-2">
+                    <div className="text-center px-2">
                       <h3 className="text-white font-bold text-lg sm:text-xl mb-1">
                         {item.name || item.title || `Instructor ${index + 1}`}
                       </h3>
                       <p className="text-gray-400 text-sm sm:text-base">
-                        {item.expertise ||
-                          item.specialization ||
-                          item.field ||
-                          "Expert Instructor"}
+                        {item.expertise || "Expert Instructor"}
                       </p>
                     </div>
                   </div>

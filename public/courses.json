@@ -1,0 +1,140 @@
+[
+  {
+    "id": 1,
+    "category": "Web Development",
+    "description": "Learn how to build responsive and dynamic websites using modern web technologies.",
+    "image": "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "courses": [
+      {
+        "id": 101,
+        "title": "HTML & CSS Fundamentals",
+        "level": "Beginner",
+        "duration": "4 Weeks"
+      },
+      {
+        "id": 102,
+        "title": "JavaScript for Beginners",
+        "level": "Intermediate",
+        "duration": "6 Weeks"
+      },
+      {
+        "id": 103,
+        "title": "React with Firebase",
+        "level": "Advanced",
+        "duration": "8 Weeks"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "category": "Graphic Design",
+    "description": "Master the art of visual communication with Photoshop, Illustrator, and design theory.",
+    "image": "https://images.pexels.com/photos/4348404/pexels-photo-4348404.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "courses": [
+      {
+        "id": 201,
+        "title": "Adobe Photoshop Basics",
+        "level": "Beginner",
+        "duration": "3 Weeks"
+      },
+      {
+        "id": 202,
+        "title": "Logo Design with Illustrator",
+        "level": "Intermediate",
+        "duration": "5 Weeks"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "category": "UI/UX Design",
+    "description": "Design intuitive user interfaces and experiences using Figma, Adobe XD, and design systems.",
+    "image": "https://images.pexels.com/photos/3184450/pexels-photo-3184450.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "courses": [
+      {
+        "id": 301,
+        "title": "Figma for Beginners",
+        "level": "Beginner",
+        "duration": "4 Weeks"
+      },
+      {
+        "id": 302,
+        "title": "UX Research & Wireframing",
+        "level": "Intermediate",
+        "duration": "6 Weeks"
+      },
+      {
+        "id": 303,
+        "title": "UI Design Systems",
+        "level": "Advanced",
+        "duration": "7 Weeks"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "category": "Mobile App Development",
+    "description": "Build Android and iOS applications using Flutter and React Native.",
+    "image": "https://images.pexels.com/photos/1181271/pexels-photo-1181271.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "courses": [
+      {
+        "id": 401,
+        "title": "Flutter Crash Course",
+        "level": "Beginner",
+        "duration": "5 Weeks"
+      },
+      {
+        "id": 402,
+        "title": "React Native for Developers",
+        "level": "Intermediate",
+        "duration": "7 Weeks"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "category": "Data Science & AI",
+    "description": "Analyze data and build AI models with Python, TensorFlow, and Pandas.",
+    "image": "https://images.pexels.com/photos/1181359/pexels-photo-1181359.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "courses": [
+      {
+        "id": 501,
+        "title": "Python for Data Science",
+        "level": "Beginner",
+        "duration": "6 Weeks"
+      },
+      {
+        "id": 502,
+        "title": "Machine Learning Fundamentals",
+        "level": "Intermediate",
+        "duration": "8 Weeks"
+      },
+      {
+        "id": 503,
+        "title": "Deep Learning with TensorFlow",
+        "level": "Advanced",
+        "duration": "10 Weeks"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "category": "Cybersecurity",
+    "description": "Understand security principles, ethical hacking, and protect systems from vulnerabilities.",
+    "image": "https://images.pexels.com/photos/5380662/pexels-photo-5380662.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "courses": [
+      {
+        "id": 601,
+        "title": "Introduction to Cybersecurity",
+        "level": "Beginner",
+        "duration": "4 Weeks"
+      },
+      {
+        "id": 602,
+        "title": "Ethical Hacking Techniques",
+        "level": "Intermediate",
+        "duration": "6 Weeks"
+      }
+    ]
+  }
+]
