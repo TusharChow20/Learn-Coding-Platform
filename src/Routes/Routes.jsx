@@ -5,6 +5,7 @@ import About from "../Pages/About";
 import Pricing from "../Pages/Pricing";
 import Contact from "../Pages/Contact";
 import Home from "../Pages/Home";
+import axios from "axios";
 
 const router = createBrowserRouter([
   {
@@ -12,7 +13,8 @@ const router = createBrowserRouter([
     Component: RootLayout,
     children: [
       {
-        path: "/home",
+        path: "/",
+        loader: () => axios("/teacherData.json"),
         Component: Home,
       },
       {
