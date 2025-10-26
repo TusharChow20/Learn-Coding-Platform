@@ -7,6 +7,7 @@ import Home from "../Pages/Home";
 import axios from "axios";
 import CourseDetails from "../Pages/CourseDetails";
 import AboutUs from "../Pages/AboutUs";
+import Login from "../Pages/LoginRegister/Login";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/courseDetails/:id",
         Component: CourseDetails,
+      },
+      {
+        path: "/login",
+        Component: Login,
       },
     ],
   },
