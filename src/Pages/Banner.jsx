@@ -87,10 +87,10 @@ const Banner = ({ data }) => {
               modifier: 1,
               slideShadows: true,
             }}
-            pagination={{
-              clickable: true,
-              dynamicBullets: true,
-            }}
+            // pagination={{
+            //   clickable: false,
+            //   dynamicBullets: false,
+            // }}
             modules={[EffectCoverflow, Pagination, Autoplay]}
             className="w-full py-12 pb-16"
           >

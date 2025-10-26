@@ -3,6 +3,9 @@
   padding-top: 30px;
   padding-bottom: 50px;
 }
+.swiper-pagination {
+  display: none !important;
+}
 
 @media (min-width: 640px) {
   .swiper-container-custom {
