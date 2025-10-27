@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router";
-import { Sun, Moon, Menu, X } from "lucide-react";
+import { Sun, Moon, Menu, X, LogIn } from "lucide-react";
 
 const Navbar = () => {
   const [theme, setTheme] = useState("light");
@@ -22,13 +22,12 @@ const Navbar = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Courses", path: "/courses" },
-    { name: "About Us", path: "/about" },
+    { name: "About Developer", path: "/about" },
     { name: "Pricing", path: "/pricing" },
-    { name: "Contact", path: "/contact" },
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-base-100/80 backdrop-blur-lg border-b border-base-300 shadow-sm">
+    <nav className="sticky top-0 z-50 bg-base-100/80 backdrop-blur-lg border-b border-base-300 shadow-sm ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
@@ -39,6 +38,7 @@ const Navbar = () => {
               Learn<span className="text-accent">Coding</span>
             </NavLink>
           </div>
+
           <div className="hidden md:flex items-center space-x-1">
             {navLinks.map((link) => (
               <NavLink
@@ -50,6 +50,7 @@ const Navbar = () => {
               </NavLink>
             ))}
           </div>
+
           <div className="hidden md:flex items-center space-x-4">
             <button
               onClick={toggleTheme}
@@ -62,6 +63,15 @@ const Navbar = () => {
                 <Sun className="w-5 h-5" />
               )}
             </button>
+
+            <NavLink
+              to="/login"
+              className="btn btn-ghost gap-2 hover:bg-base-200 flex items-center"
+            >
+              <LogIn className="w-5 h-5" />
+              Login
+            </NavLink>
+
             <NavLink
               to="/courses"
               className="btn btn-primary hover:scale-105 transition-transform duration-200 shadow-lg"
@@ -69,6 +79,7 @@ const Navbar = () => {
               Enroll Now
             </NavLink>
           </div>
+
           <div className="flex md:hidden items-center space-x-2">
             <button
               onClick={toggleTheme}
@@ -95,9 +106,10 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          isMenuOpen ? "max-h-[28rem] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div className="px-4 pt-2 pb-4 space-y-2 bg-base-100 border-t border-base-300">
@@ -112,8 +124,16 @@ const Navbar = () => {
             </NavLink>
           ))}
           <NavLink
+            to="/login"
+            className="btn btn-ghost w-full justify-start gap-2 flex"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <LogIn className="w-5 h-5" />
+            Login
+          </NavLink>
+          <NavLink
             to="/courses"
-            className=" btn btn-primary w-full "
+            className=" btn btn-primary w-full mt-4"
             onClick={() => setIsMenuOpen(false)}
           >
             Enroll Now
