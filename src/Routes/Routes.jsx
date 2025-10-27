@@ -9,6 +9,7 @@ import CourseDetails from "../Pages/CourseDetails";
 import AboutUs from "../Pages/AboutUs";
 import Login from "../Pages/LoginRegister/Login";
 import Register from "../Pages/LoginRegister/Register";
+import ProfileDashboard from "../Pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         Component: Register,
+      },
+      {
+        path: "/profile",
+        Component: ProfileDashboard,
       },
     ],
   },
