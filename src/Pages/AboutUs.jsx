@@ -58,11 +58,9 @@ const AboutUs = () => {
 
   return (
     <div className="min-h-screen bg-base-100">
-      {/* Header Section */}
       <div className="relative bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Text Section */}
             <div className="order-2 lg:order-1 space-y-4 sm:space-y-6">
               <div className="inline-block">
                 <span className="badge badge-primary badge-lg">
@@ -75,7 +73,7 @@ const AboutUs = () => {
                 <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                   <TypingText text="Tushar Chowdhury" speed={300} />
                 </span>
-                <span className="animate-pulse">|</span> {/* blinking cursor */}
+                <span className="animate-pulse">|</span>
               </h1>
 
               <p className="text-base sm:text-lg lg:text-xl text-base-content/80 leading-relaxed">
@@ -108,14 +106,16 @@ const AboutUs = () => {
                   GitHub
                 </a>
 
-                <button className="btn btn-accent gap-2">
+                <a
+                  href="/Tushar_CV.pdf"
+                  download="Tushar_Chowdhury_CV.pdf"
+                  className="btn btn-accent gap-2 flex items-center"
+                >
                   <Download className="w-4 h-4 sm:w-5 sm:h-5" />
                   Download CV
-                </button>
+                </a>
               </div>
             </div>
-
-            {/* Profile Section */}
             <div className="order-1 lg:order-2 flex justify-center">
               <div className="relative">
                 <div className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full bg-gradient-to-br from-primary to-secondary p-1">
@@ -133,12 +133,8 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
-
-      {/* Info Cards Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-        {/* About, Skills, Experience, Achievements */}
         <div className="space-y-12 sm:space-y-16">
-          {/* About Me */}
           <div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 flex items-center gap-3">
               <Code className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
@@ -171,8 +167,6 @@ const AboutUs = () => {
               </div>
             </div>
           </div>
-
-          {/* Technical Skills */}
           <div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 flex items-center gap-3">
               <Award className="w-6 h-6 sm:w-8 sm:h-8 text-secondary" />
@@ -203,8 +197,6 @@ const AboutUs = () => {
               </div>
             </div>
           </div>
-
-          {/* Experience */}
           <div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 flex items-center gap-3">
               <Briefcase className="w-6 h-6 sm:w-8 sm:h-8 text-accent" />
@@ -239,8 +231,6 @@ const AboutUs = () => {
               ))}
             </div>
           </div>
-
-          {/* Achievements */}
           <div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 flex items-center gap-3">
               <Award className="w-6 h-6 sm:w-8 sm:h-8 text-success" />
