@@ -9,6 +9,7 @@ import {
   XCircle,
   Sparkles,
 } from "lucide-react";
+import { NavLink } from "react-router";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -522,8 +523,8 @@ export default function Register() {
           }`}
         >
           Already have an account?{" "}
-          <button
-            onClick={() => console.log("Sign in clicked")}
+          <NavLink
+            to={"/login"}
             className={`font-semibold transition-colors ${
               isDark
                 ? "text-purple-400 hover:text-purple-300"
@@ -531,7 +532,7 @@ export default function Register() {
             }`}
           >
             Sign in
-          </button>
+          </NavLink>
         </p>
       </div>
     </div>
