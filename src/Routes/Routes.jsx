@@ -8,6 +8,7 @@ import axios from "axios";
 import CourseDetails from "../Pages/CourseDetails";
 import AboutUs from "../Pages/AboutUs";
 import Login from "../Pages/LoginRegister/Login";
+import Register from "../Pages/LoginRegister/Register";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         Component: Login,
+      },
+      {
+        path: "/register",
+        Component: Register,
       },
     ],
   },
