@@ -16,7 +16,9 @@ const AuthProvider = ({ children }) => {
     setUser,
     createUser,
   };
-  return <AuthContext.Provider value={authData}></AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;

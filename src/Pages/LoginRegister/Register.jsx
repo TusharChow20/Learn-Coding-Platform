@@ -9,9 +9,14 @@ import {
   XCircle,
   Sparkles,
 } from "lucide-react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Register() {
+  const { createUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isDark, setIsDark] = useState(true);
@@ -68,13 +73,72 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isPasswordValid) {
-      setIsLoading(true);
-      setTimeout(() => {
-        setIsLoading(false);
-        console.log("Registration submitted:", formData);
-      }, 2000);
+
+    if (!isPasswordValid) {
+      toast.error("Please meet all password requirements");
+      return;
     }
+
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    setIsLoading(true);
+
+    createUser(email, password)
+      .then(() => {
+        // Show success toast
+        toast.success("Account created successfully! Redirecting to login...", {
+          duration: 3000,
+          icon: "🎉",
+        });
+
+        // Reset the form data state
+        setFormData({
+          fullName: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
+
+        // Reset touched state
+        setTouched({
+          password: false,
+          confirmPassword: false,
+        });
+
+        // Reset the form element
+        e.target.reset();
+
+        setIsLoading(false);
+
+        // Redirect to login page after 2 seconds
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+
+        // Show error toast with specific error messages
+        let errorMessage = "Failed to create account";
+
+        if (error.code === "auth/email-already-in-use") {
+          errorMessage = "This email is already registered";
+        } else if (error.code === "auth/invalid-email") {
+          errorMessage = "Invalid email address";
+        } else if (error.code === "auth/weak-password") {
+          errorMessage = "Password is too weak";
+        } else if (error.code === "auth/network-request-failed") {
+          errorMessage = "Network error. Please check your connection";
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+
+        toast.error(errorMessage, {
+          duration: 4000,
+        });
+      });
   };
 
   const ValidationItem = ({ isValid, text }) => (
@@ -100,6 +164,35 @@ export default function Register() {
           : "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50"
       }`}
     >
+      {/* Toast Container */}
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          className: "",
+          style: {
+            background: isDark ? "#1e293b" : "#fff",
+            color: isDark ? "#fff" : "#1e293b",
+            border: isDark ? "1px solid #475569" : "1px solid #e5e7eb",
+            padding: "16px",
+            borderRadius: "12px",
+            fontSize: "14px",
+            fontWeight: "500",
+          },
+          success: {
+            iconTheme: {
+              primary: "#10b981",
+              secondary: "#fff",
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: "#ef4444",
+              secondary: "#fff",
+            },
+          },
+        }}
+      />
+
       <style>{`
         @keyframes scale-in {
           0% { transform: scale(0); }
@@ -174,7 +267,7 @@ export default function Register() {
           </p>
         </div>
 
-        <div className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div className="relative group">
             <label
               className={`block text-sm font-medium mb-2 ${
@@ -405,6 +498,7 @@ export default function Register() {
             >
               I agree to the{" "}
               <button
+                type="button"
                 className={`font-medium transition-colors ${
                   isDark
                     ? "text-purple-400 hover:text-purple-300"
@@ -415,6 +509,7 @@ export default function Register() {
               </button>{" "}
               and{" "}
               <button
+                type="button"
                 className={`font-medium transition-colors ${
                   isDark
                     ? "text-purple-400 hover:text-purple-300"
@@ -427,7 +522,7 @@ export default function Register() {
           </label>
 
           <button
-            onClick={handleSubmit}
+            type="submit"
             disabled={isLoading || !isPasswordValid}
             className={`w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] ${
               isDark
@@ -444,7 +539,7 @@ export default function Register() {
               "Create Account"
             )}
           </button>
-        </div>
+        </form>
 
         <div className="relative my-8">
           <div
@@ -469,7 +564,8 @@ export default function Register() {
 
         <div className="grid grid-cols-2 gap-4">
           <button
-            onClick={() => console.log("Google signup")}
+            type="button"
+            onClick={() => toast.info("Google signup coming soon!")}
             className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 hover:scale-105 ${
               isDark
                 ? "bg-slate-700/50 text-white border border-slate-600 hover:bg-slate-700"
@@ -500,7 +596,8 @@ export default function Register() {
             </svg>
           </button>
           <button
-            onClick={() => console.log("GitHub signup")}
+            type="button"
+            onClick={() => toast.info("GitHub signup coming soon!")}
             className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 hover:scale-105 ${
               isDark
                 ? "bg-slate-700/50 text-white border border-slate-600 hover:bg-slate-700"
