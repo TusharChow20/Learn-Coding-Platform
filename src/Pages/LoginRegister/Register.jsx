@@ -15,7 +15,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Register() {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -86,32 +86,23 @@ export default function Register() {
 
     createUser(email, password)
       .then(() => {
-        // Show success toast
         toast.success("Account created successfully! Redirecting to login...", {
           duration: 3000,
           icon: "🎉",
         });
-
-        // Reset the form data state
         setFormData({
           fullName: "",
           email: "",
           password: "",
           confirmPassword: "",
         });
-
-        // Reset touched state
         setTouched({
           password: false,
           confirmPassword: false,
         });
-
-        // Reset the form element
         e.target.reset();
 
         setIsLoading(false);
-
-        // Redirect to login page after 2 seconds
         setTimeout(() => {
           navigate("/login");
         }, 2000);
@@ -119,8 +110,6 @@ export default function Register() {
       .catch((error) => {
         console.log(error);
         setIsLoading(false);
-
-        // Show error toast with specific error messages
         let errorMessage = "Failed to create account";
 
         if (error.code === "auth/email-already-in-use") {
@@ -138,6 +127,41 @@ export default function Register() {
         toast.error(errorMessage, {
           duration: 4000,
         });
+      });
+  };
+
+  const handleGoogleSignIn = () => {
+    const loadingToast = toast.loading("Connecting to Google...", {
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
+
+    signInWithGoogle()
+      .then(() => {
+        toast.success("Welcome! Redirecting...", {
+          id: loadingToast,
+          duration: 2000,
+        });
+
+        // Navigate after successful sign-in
+        setTimeout(() => {
+          navigate("/"); // or wherever you want to redirect
+        }, 1500);
+      })
+      .catch((error) => {
+        console.error("Google sign-in error:", error);
+        toast.error(
+          error.code === "auth/popup-closed-by-user"
+            ? "Sign-in cancelled"
+            : error.message || "Sign-in failed",
+          {
+            id: loadingToast,
+            duration: 3000,
+          }
+        );
       });
   };
 
@@ -565,8 +589,8 @@ export default function Register() {
         <div className="grid grid-cols-2 gap-4">
           <button
             type="button"
-            onClick={() => toast.info("Google signup coming soon!")}
-            className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 hover:scale-105 ${
+            onClick={() => handleGoogleSignIn()}
+            className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 cursor-pointer hover:scale-105 ${
               isDark
                 ? "bg-slate-700/50 text-white border border-slate-600 hover:bg-slate-700"
                 : "bg-white text-gray-700 border border-gray-200 hover:border-purple-300 shadow-sm hover:shadow"
