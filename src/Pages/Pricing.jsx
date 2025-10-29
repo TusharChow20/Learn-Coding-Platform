@@ -63,8 +63,10 @@ const Pricing = () => {
   };
 
   const calculateTotal = () => {
-    const subtotal = calculateSubtotal();
-    return subtotal - discount;
+    const subtotal1 = calculateSubtotal();
+    const subtotal2 = subtotal1 - discount;
+    const subtotal = subtotal2.toFixed(2);
+    return subtotal;
   };
 
   const handleRemoveCourse = (courseId) => {
@@ -72,14 +74,26 @@ const Pricing = () => {
       (course) => course.id !== courseId
     );
     setEnrolledCourses(updatedCourses);
+    const newSubtotal = updatedCourses.reduce(
+      (sum, course) => sum + course.price,
+      0
+    );
+    if (newSubtotal < 120 && discount > 0) {
+      setDiscount(0);
+      setPromoCode("");
+      showToast(
+        "Course removed. Promo code removed (order below $120)",
+        "error"
+      );
+    } else {
+      showToast("Course removed from cart", "success");
+    }
 
     try {
       localStorage.setItem("enrolledCourses", JSON.stringify(updatedCourses));
     } catch (error) {
       console.error("Error updating cart in localStorage:", error);
     }
-
-    showToast("Course removed from cart", "success");
   };
 
   const handleApplyPromo = () => {
