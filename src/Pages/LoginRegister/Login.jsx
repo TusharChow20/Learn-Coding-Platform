@@ -3,7 +3,11 @@ import { Eye, EyeOff, Mail, Lock, Sparkles } from "lucide-react";
 import { NavLink } from "react-router";
 import { useContext } from "react";
 import { ThemeContext } from "../../Provider/ThemeContext";
+import { AuthContext } from "../../Provider/AuthProvider";
+import toast from "react-hot-toast";
+
 export default function Login() {
+  const { signInWithGoogle } = useContext(AuthContext);
   const { theme } = useContext(ThemeContext);
   const isDark = theme === "dark";
   const [showPassword, setShowPassword] = useState(false);
@@ -18,6 +22,38 @@ export default function Login() {
       setIsLoading(false);
       console.log("Login submitted:", { email, password });
     }, 2000);
+  };
+  const handleGoogleSignIn = () => {
+    const loadingToast = toast.loading("Connecting to Google...", {
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
+
+    signInWithGoogle()
+      .then(() => {
+        toast.success("Welcome! Redirecting...", {
+          id: loadingToast,
+          duration: 2000,
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+      })
+      .catch((error) => {
+        console.error("Google sign-in error:", error);
+        toast.error(
+          error.code === "auth/popup-closed-by-user"
+            ? "Sign-in cancelled"
+            : error.message || "Sign-in failed",
+          {
+            id: loadingToast,
+            duration: 3000,
+          }
+        );
+      });
   };
 
   return (
@@ -227,7 +263,7 @@ export default function Login() {
 
         <div className="grid grid-cols-2 gap-4">
           <button
-            onClick={() => console.log("Google login")}
+            onClick={handleGoogleSignIn}
             className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 hover:scale-105 ${
               isDark
                 ? "bg-slate-700/50 text-white border border-slate-600 hover:bg-slate-700"

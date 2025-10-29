@@ -20,7 +20,6 @@ export default function Register() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  // const [isDark, setIsDark] = useState(true);
   const { theme } = useContext(ThemeContext);
   const isDark = theme === "dark";
   const [isLoading, setIsLoading] = useState(false);

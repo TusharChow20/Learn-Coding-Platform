@@ -355,15 +355,14 @@ export default function ProfileDashboard() {
                       </div>
                     )}
                   </div>
-
-                  {/* Email */}
                   <div className="form-control">
                     <label className="label">
                       <span className="label-text font-semibold">Email</span>
                     </label>
                     <div className="flex items-center gap-2 p-3 bg-base-200 rounded-lg">
                       <Mail className="w-5 h-5 text-base-content/50" />
-                      <span>{profileData.email}</span>
+
+                      <span className="wrap-anywhere">{profileData.email}</span>
                       {user.emailVerified && (
                         <span className="badge badge-success badge-sm ml-auto">
                           Verified
