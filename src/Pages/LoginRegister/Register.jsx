@@ -86,25 +86,13 @@ export default function Register() {
 
     createUser(email, password)
       .then(() => {
-        toast.success("Account created successfully! Redirecting to login...", {
+        toast.success("Welcome! Your account has been created.", {
           duration: 3000,
           icon: "🎉",
         });
-        setFormData({
-          fullName: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
-        });
-        setTouched({
-          password: false,
-          confirmPassword: false,
-        });
-        e.target.reset();
-
         setIsLoading(false);
         setTimeout(() => {
-          navigate("/login");
+          navigate("/"); 
         }, 2000);
       })
       .catch((error) => {
@@ -145,10 +133,8 @@ export default function Register() {
           id: loadingToast,
           duration: 2000,
         });
-
-        // Navigate after successful sign-in
         setTimeout(() => {
-          navigate("/"); // or wherever you want to redirect
+          navigate("/"); 
         }, 1500);
       })
       .catch((error) => {
