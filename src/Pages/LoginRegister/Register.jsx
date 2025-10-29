@@ -404,7 +404,7 @@ export default function Register() {
             </div>
           </div>
 
-          {touched.password && formData.password && (
+          {touched.password && formData.password && !isPasswordValid && (
             <div
               className={`p-4 rounded-xl border ${
                 isDark
