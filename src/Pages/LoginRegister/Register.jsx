@@ -232,17 +232,6 @@ export default function Register() {
         ></div>
       </div>
 
-      <button
-        onClick={() => setIsDark(!isDark)}
-        className={`absolute top-6 right-6 p-3 rounded-full transition-all duration-300 hover:scale-110 ${
-          isDark
-            ? "bg-slate-800 text-yellow-400"
-            : "bg-white text-purple-600 shadow-lg"
-        }`}
-      >
-        {isDark ? "☀️" : "🌙"}
-      </button>
-
       <div
         className={`relative w-full max-w-md transition-all duration-500 ${
           isDark ? "bg-slate-800/50" : "bg-white/80"
