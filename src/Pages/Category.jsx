@@ -1,8 +1,10 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useNavigate } from "react-router";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper/modules";
+
 const categoryIcons = {
   "Web Development": "💻",
   "Graphic Design": "🎨",
@@ -11,6 +13,7 @@ const categoryIcons = {
   "Data Science & AI": "🤖",
   Cybersecurity: "🔒",
 };
+
 const categoryColors = {
   "Web Development": "from-pink-500 to-pink-600",
   "Graphic Design": "from-red-500 to-orange-500",
@@ -21,6 +24,12 @@ const categoryColors = {
 };
 
 const CategorySlider = ({ categories }) => {
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (categoryName) => {
+    navigate(`/courses?category=${encodeURIComponent(categoryName)}`);
+  };
+
   return (
     <section className="px-4 sm:px-6 lg:px-10 py-12">
       <div className="max-w-7xl mx-auto">
@@ -98,7 +107,10 @@ const CategorySlider = ({ categories }) => {
             {categories &&
               categories.map((item) => (
                 <SwiperSlide key={item.id}>
-                  <div className="bg-base-100 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 p-6 cursor-pointer group hover:-translate-y-2 border border-base-300">
+                  <div
+                    onClick={() => handleCategoryClick(item.category)}
+                    className="bg-base-100 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 p-6 cursor-pointer group hover:-translate-y-2 border border-base-300"
+                  >
                     <div
                       className={`w-16 h-16 lg:w-20 lg:h-20 mx-auto mb-4 rounded-xl bg-gradient-to-br ${
                         categoryColors[item.category] ||
@@ -108,12 +120,10 @@ const CategorySlider = ({ categories }) => {
                       {categoryIcons[item.category] || "📚"}
                     </div>
 
-                    {/* Category Title */}
                     <h3 className="text-center font-bold text-base lg:text-lg mb-2 text-base-content min-h-[48px] lg:min-h-[56px] flex items-center justify-center px-2">
                       {item.category}
                     </h3>
 
-                    {/* Courses Count */}
                     <p className="text-center text-base-content/60 text-sm">
                       {item.courses?.length || 0} Courses
                     </p>
