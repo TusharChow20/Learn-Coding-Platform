@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, Sparkles } from "lucide-react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useContext } from "react";
 import { ThemeContext } from "../../Provider/ThemeContext";
 import { AuthContext } from "../../Provider/AuthProvider";
 import toast from "react-hot-toast";
 
 export default function Login() {
-  const { signInWithGoogle } = useContext(AuthContext);
+  const { signInWithGoogle, signInWithGitHub } = useContext(AuthContext);
   const { theme } = useContext(ThemeContext);
   const isDark = theme === "dark";
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,6 +45,38 @@ export default function Login() {
       })
       .catch((error) => {
         console.error("Google sign-in error:", error);
+        toast.error(
+          error.code === "auth/popup-closed-by-user"
+            ? "Sign-in cancelled"
+            : error.message || "Sign-in failed",
+          {
+            id: loadingToast,
+            duration: 3000,
+          }
+        );
+      });
+  };
+  const handleGitHubSignIn = () => {
+    const loadingToast = toast.loading("Connecting to GitHub...", {
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
+
+    signInWithGitHub()
+      .then(() => {
+        toast.success("Welcome! Redirecting...", {
+          id: loadingToast,
+          duration: 2000,
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+      })
+      .catch((error) => {
+        console.error("GitHUb sign-in error:", error);
         toast.error(
           error.code === "auth/popup-closed-by-user"
             ? "Sign-in cancelled"
@@ -294,7 +327,7 @@ export default function Login() {
             </svg>
           </button>
           <button
-            onClick={() => console.log("GitHub login")}
+            onClick={handleGitHubSignIn}
             className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 hover:scale-105 ${
               isDark
                 ? "bg-slate-700/50 text-white border border-slate-600 hover:bg-slate-700"

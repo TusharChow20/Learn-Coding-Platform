@@ -16,7 +16,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { ThemeContext } from "../../Provider/ThemeContext";
 
 export default function Register() {
-  const { createUser, signInWithGoogle } = useContext(AuthContext);
+  const { createUser, signInWithGoogle, signInWithGitHub } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -141,6 +142,38 @@ export default function Register() {
       })
       .catch((error) => {
         console.error("Google sign-in error:", error);
+        toast.error(
+          error.code === "auth/popup-closed-by-user"
+            ? "Sign-in cancelled"
+            : error.message || "Sign-in failed",
+          {
+            id: loadingToast,
+            duration: 3000,
+          }
+        );
+      });
+  };
+  const handleGitHubSignIn = () => {
+    const loadingToast = toast.loading("Connecting to GitHub...", {
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
+
+    signInWithGitHub()
+      .then(() => {
+        toast.success("Welcome! Redirecting...", {
+          id: loadingToast,
+          duration: 2000,
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+      })
+      .catch((error) => {
+        console.error("GitHUb sign-in error:", error);
         toast.error(
           error.code === "auth/popup-closed-by-user"
             ? "Sign-in cancelled"
@@ -598,7 +631,7 @@ export default function Register() {
           </button>
           <button
             type="button"
-            onClick={() => toast.info("GitHub signup coming soon!")}
+            onClick={handleGitHubSignIn}
             className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 hover:scale-105 ${
               isDark
                 ? "bg-slate-700/50 text-white border border-slate-600 hover:bg-slate-700"
