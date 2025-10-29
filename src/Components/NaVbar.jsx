@@ -1,35 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { Sun, Moon, Menu, X, LogIn, LogOut, User } from "lucide-react";
 import { AuthContext } from "../Provider/AuthProvider";
+import { ThemeContext } from "../Provider/ThemeContext";
 
 const Navbar = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
   const { user, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [theme, setTheme] = useState("light");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "light";
-    setTheme(savedTheme);
-    document.documentElement.setAttribute("data-theme", savedTheme);
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
-  };
 
   const handleLogout = () => {
     logOut()
-      .then(() => {
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error("Logout error:", error);
-      });
+      .then(() => navigate("/"))
+      .catch((error) => console.error("Logout error:", error));
   };
 
   const navLinks = [
@@ -54,6 +38,7 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 bg-base-100/80 backdrop-blur-lg border-b border-base-300 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
+          {/* Logo */}
           <div className="flex-shrink-0">
             <NavLink
               to="/"
@@ -63,6 +48,7 @@ const Navbar = () => {
             </NavLink>
           </div>
 
+          {/* Desktop Links */}
           <div className="hidden md:flex items-center space-x-1">
             {navLinks.map((link) => (
               <NavLink
@@ -75,6 +61,7 @@ const Navbar = () => {
             ))}
           </div>
 
+          {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
             <button
               onClick={toggleTheme}
@@ -90,7 +77,7 @@ const Navbar = () => {
 
             {user ? (
               <>
-                {/* User Profile Icon */}
+                {/* Profile */}
                 <button
                   onClick={() => navigate("/profile")}
                   className="btn btn-ghost btn-circle avatar placeholder group relative"
@@ -115,8 +102,6 @@ const Navbar = () => {
                   <LogOut className="w-5 h-5" />
                   Logout
                 </button>
-
-                {/* Enroll Now Button */}
                 <NavLink
                   to="/courses"
                   className="btn btn-primary hover:scale-105 transition-transform duration-200 shadow-lg"
@@ -126,7 +111,6 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                {/* Login Button */}
                 <NavLink
                   to="/login"
                   className="btn btn-ghost gap-2 hover:bg-base-200 flex items-center"
@@ -134,8 +118,6 @@ const Navbar = () => {
                   <LogIn className="w-5 h-5" />
                   Login
                 </NavLink>
-
-                {/* Enroll Now Button */}
                 <NavLink
                   to="/courses"
                   className="btn btn-primary hover:scale-105 transition-transform duration-200 shadow-lg"
@@ -146,6 +128,7 @@ const Navbar = () => {
             )}
           </div>
 
+          {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center space-x-2">
             <button
               onClick={toggleTheme}
@@ -173,6 +156,7 @@ const Navbar = () => {
         </div>
       </div>
 
+      {/* Mobile Menu */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
           isMenuOpen ? "max-h-[40rem] opacity-100" : "max-h-0 opacity-0"

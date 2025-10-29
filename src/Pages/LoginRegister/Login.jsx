@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, Sparkles } from "lucide-react";
 import { NavLink } from "react-router";
-
+import { useContext } from "react";
+import { ThemeContext } from "../../Provider/ThemeContext";
 export default function Login() {
+  const { theme } = useContext(ThemeContext);
+  const isDark = theme === "dark";
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isDark, setIsDark] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e) => {
@@ -22,8 +24,8 @@ export default function Login() {
     <div
       className={`min-h-screen flex items-center justify-center p-4 transition-colors duration-500 ${
         isDark
-          ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
-          : "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50"
+          ? "bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950"
+          : "bg-gradient-to-br from-indigo-50 via-blue-50 to-cyan-50"
       }`}
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

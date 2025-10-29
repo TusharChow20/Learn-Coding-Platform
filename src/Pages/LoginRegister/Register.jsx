@@ -13,13 +13,16 @@ import { NavLink, useNavigate } from "react-router";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
+import { ThemeContext } from "../../Provider/ThemeContext";
 
 export default function Register() {
   const { createUser, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isDark, setIsDark] = useState(true);
+  // const [isDark, setIsDark] = useState(true);
+  const { theme } = useContext(ThemeContext);
+  const isDark = theme === "dark";
   const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -92,7 +95,7 @@ export default function Register() {
         });
         setIsLoading(false);
         setTimeout(() => {
-          navigate("/"); 
+          navigate("/");
         }, 2000);
       })
       .catch((error) => {
@@ -134,7 +137,7 @@ export default function Register() {
           duration: 2000,
         });
         setTimeout(() => {
-          navigate("/"); 
+          navigate("/");
         }, 1500);
       })
       .catch((error) => {
@@ -170,7 +173,7 @@ export default function Register() {
     <div
       className={`min-h-screen flex items-center justify-center p-4 transition-colors duration-500 ${
         isDark
-          ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+          ? "bg-gradient-to-br from-gray-950 via-emerald-950 to-gray-950"
           : "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50"
       }`}
     >
