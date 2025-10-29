@@ -16,7 +16,9 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const handleForgotPassword = () => {
+    navigate("/forgot-password", { state: { email } });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -340,7 +342,7 @@ export default function Login() {
             </label>
             <button
               type="button"
-              onClick={() => console.log("Forgot password clicked")}
+              onClick={handleForgotPassword}
               className={`text-sm font-medium transition-colors ${
                 isDark
                   ? "text-purple-400 hover:text-purple-300"

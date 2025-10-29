@@ -10,6 +10,7 @@ import AboutUs from "../Pages/AboutUs";
 import Login from "../Pages/LoginRegister/Login";
 import Register from "../Pages/LoginRegister/Register";
 import ProfileDashboard from "../Pages/Profile";
+import ForgotPassword from "../Pages/ForgetPass";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         Component: ProfileDashboard,
+      },
+      {
+        path: "/forgot-password",
+        Component: ForgotPassword,
       },
     ],
   },
