@@ -13,7 +13,7 @@ const Home = () => {
     fetch("/courses.json")
       .then((res) => res.json())
       .then((data) => setCategories(data))
-      .catch((err) => console.error("Error loading categories:", err));
+      .catch();
   }, []);
 
   return (

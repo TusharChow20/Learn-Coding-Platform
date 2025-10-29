@@ -16,7 +16,6 @@ const Courses = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching courses:", error);
         setLoading(false);
       });
   }, []);

@@ -69,7 +69,6 @@ export default function Login() {
           } else if (error.request) {
             errorMessage = "Network error. Check your connection.";
           } else if (error.code) {
-            // Firebase specific errors
             switch (error.code) {
               case "auth/invalid-email":
                 errorMessage = "Invalid email address.";
@@ -128,7 +127,6 @@ export default function Login() {
         }, 1500);
       })
       .catch((error) => {
-        console.error("Google sign-in error:", error);
         toast.error(
           error.code === "auth/popup-closed-by-user"
             ? "Sign-in cancelled"
@@ -161,7 +159,6 @@ export default function Login() {
         }, 1500);
       })
       .catch((error) => {
-        console.error("GitHub sign-in error:", error);
         toast.error(
           error.code === "auth/popup-closed-by-user"
             ? "Sign-in cancelled"

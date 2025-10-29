@@ -56,7 +56,7 @@ const Pricing = () => {
           setEnrolledCourses(parsedCart);
         }
       } catch (error) {
-        console.error("Error loading cart from localStorage:", error);
+        console.error("Error loading cart from localStorage:");
       }
     };
 
@@ -102,7 +102,7 @@ const Pricing = () => {
     try {
       localStorage.setItem("enrolledCourses", JSON.stringify(updatedCourses));
     } catch (error) {
-      console.error("Error updating cart in localStorage:", error);
+      console.error("Error updating cart in localStorage:");
     }
   };
 
@@ -147,7 +147,7 @@ const Pricing = () => {
     try {
       localStorage.removeItem("enrolledCourses");
     } catch (error) {
-      console.error("Error clearing cart from localStorage:", error);
+      console.error("Error clearing cart from localStorage:");
     }
 
     showToast("Payment successful! Enjoy your courses", "success");

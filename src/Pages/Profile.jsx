@@ -35,8 +35,6 @@ export default function ProfileDashboard() {
   });
 
   const [tempData, setTempData] = useState({ ...profileData });
-
-  // Load user data when component mounts
   useEffect(() => {
     if (user) {
       const joinDate = user.metadata?.creationTime
@@ -58,8 +56,6 @@ export default function ProfileDashboard() {
       setLoading(false);
     }
   }, [user]);
-
-  // Mock stats data
   const stats = [
     {
       icon: BookOpen,
@@ -90,8 +86,6 @@ export default function ProfileDashboard() {
       bg: "bg-secondary/10",
     },
   ];
-
-  // Mock achievements
   const achievements = [
     {
       title: "First Steps",
@@ -131,14 +125,11 @@ export default function ProfileDashboard() {
 
   const handleSave = async () => {
     try {
-      // Update Firebase Auth profile
       if (tempData.displayName !== user.displayName) {
         await updateProfile({
           displayName: tempData.displayName,
         });
       }
-
-      // Update local state
       setProfileData({ ...tempData });
       setIsEditing(false);
 
@@ -147,7 +138,6 @@ export default function ProfileDashboard() {
         duration: 3000,
       });
     } catch (error) {
-      console.error("Error updating profile:", error);
       toast.error("Failed to update profile. Please try again.");
     }
   };
@@ -166,11 +156,9 @@ export default function ProfileDashboard() {
 
       setIsUploading(true);
 
-      // Convert to base64 for display (in production, upload to Firebase Storage)
       const reader = new FileReader();
       reader.onloadend = async () => {
         try {
-          // Update Firebase Auth profile with photo URL
           await updateProfile({
             photoURL: reader.result,
           });
@@ -180,7 +168,6 @@ export default function ProfileDashboard() {
           setIsUploading(false);
           toast.success("Profile photo updated!");
         } catch (error) {
-          console.error("Error uploading photo:", error);
           setIsUploading(false);
           toast.error("Failed to update photo");
         }

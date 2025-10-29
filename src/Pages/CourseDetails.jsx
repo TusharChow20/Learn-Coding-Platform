@@ -38,8 +38,6 @@ const CourseDetails = () => {
 
         setCourse(selectedCourse);
         setTeacher(selectedTeacher);
-
-        // Check if course is already in cart
         const enrolledCourses = JSON.parse(
           localStorage.getItem("enrolledCourses") || "[]"
         );
@@ -51,7 +49,6 @@ const CourseDetails = () => {
 
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching data:", error);
         setLoading(false);
       }
     };
@@ -61,13 +58,9 @@ const CourseDetails = () => {
 
   const handleEnrollNow = () => {
     if (!course) return;
-
-    // Get existing enrolled courses from localStorage
     const enrolledCourses = JSON.parse(
       localStorage.getItem("enrolledCourses") || "[]"
     );
-
-    // Check if course is already enrolled
     const courseExists = enrolledCourses.some((c) => c.id === course.id);
 
     if (courseExists) {
@@ -81,14 +74,10 @@ const CourseDetails = () => {
       });
       return;
     }
-
-    // Add course to enrolled courses
     const updatedCourses = [...enrolledCourses, course];
     localStorage.setItem("enrolledCourses", JSON.stringify(updatedCourses));
     setIsInCart(true);
     setCartCount(updatedCourses.length);
-
-    // Show success toast
     toast.success("Course added to cart!", {
       icon: "✅",
       style: {

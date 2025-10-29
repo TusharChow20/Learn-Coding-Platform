@@ -99,7 +99,6 @@ export default function Register() {
         }, 2000);
       })
       .catch((error) => {
-        console.log(error);
         setIsLoading(false);
         let errorMessage = "Failed to create account";
 
@@ -141,7 +140,6 @@ export default function Register() {
         }, 1500);
       })
       .catch((error) => {
-        console.error("Google sign-in error:", error);
         toast.error(
           error.code === "auth/popup-closed-by-user"
             ? "Sign-in cancelled"
@@ -173,7 +171,6 @@ export default function Register() {
         }, 1500);
       })
       .catch((error) => {
-        console.error("GitHUb sign-in error:", error);
         toast.error(
           error.code === "auth/popup-closed-by-user"
             ? "Sign-in cancelled"

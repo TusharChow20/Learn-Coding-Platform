@@ -13,7 +13,7 @@ const Navbar = () => {
   const handleLogout = () => {
     logOut()
       .then(() => navigate("/"))
-      .catch((error) => console.error("Logout error:", error));
+      .catch();
   };
 
   const navLinks = [
