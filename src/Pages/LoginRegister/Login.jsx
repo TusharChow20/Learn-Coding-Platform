@@ -4,10 +4,11 @@ import { NavLink, useNavigate } from "react-router";
 import { useContext } from "react";
 import { ThemeContext } from "../../Provider/ThemeContext";
 import { AuthContext } from "../../Provider/AuthProvider";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Login() {
-  const { signInWithGoogle, signInWithGitHub } = useContext(AuthContext);
+  const { signInWithGoogle, signInWithGitHub, loginUser } =
+    useContext(AuthContext);
   const { theme } = useContext(ThemeContext);
   const isDark = theme === "dark";
   const navigate = useNavigate();
@@ -19,11 +20,92 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
+
     setTimeout(() => {
-      setIsLoading(false);
-      console.log("Login submitted:", { email, password });
+      loginUser(email, password)
+        .then(() => {
+          setIsLoading(false);
+          toast.success("Login successful! Welcome back.", {
+            duration: 3000,
+            position: "top-center",
+            style: {
+              background: "#10b981",
+              color: "#fff",
+              fontWeight: "500",
+            },
+            iconTheme: {
+              primary: "#fff",
+              secondary: "#10b981",
+            },
+          });
+          setTimeout(() => {
+            navigate("/");
+          }, 1000);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+
+          let errorMessage = "Login failed. Please try again.";
+
+          if (error.response) {
+            switch (error.response.status) {
+              case 401:
+                errorMessage = "Invalid email or password.";
+                break;
+              case 404:
+                errorMessage = "User not found. Please check your email.";
+                break;
+              case 403:
+                errorMessage = "Account is disabled. Contact support.";
+                break;
+              case 500:
+                errorMessage = "Server error. Please try again later.";
+                break;
+              default:
+                errorMessage = error.response.data?.message || "Login failed.";
+            }
+          } else if (error.request) {
+            errorMessage = "Network error. Check your connection.";
+          } else if (error.code) {
+            // Firebase specific errors
+            switch (error.code) {
+              case "auth/invalid-email":
+                errorMessage = "Invalid email address.";
+                break;
+              case "auth/user-disabled":
+                errorMessage = "This account has been disabled.";
+                break;
+              case "auth/user-not-found":
+                errorMessage = "No account found with this email.";
+                break;
+              case "auth/wrong-password":
+                errorMessage = "Incorrect password.";
+                break;
+              case "auth/invalid-credential":
+                errorMessage = "Invalid email or password.";
+                break;
+              default:
+                errorMessage = error.message || "Login failed.";
+            }
+          }
+
+          toast.error(errorMessage, {
+            duration: 4000,
+            position: "top-center",
+            style: {
+              background: "#ef4444",
+              color: "#fff",
+              fontWeight: "500",
+            },
+            iconTheme: {
+              primary: "#fff",
+              secondary: "#ef4444",
+            },
+          });
+        });
     }, 2000);
   };
+
   const handleGoogleSignIn = () => {
     const loadingToast = toast.loading("Connecting to Google...", {
       style: {
@@ -56,6 +138,7 @@ export default function Login() {
         );
       });
   };
+
   const handleGitHubSignIn = () => {
     const loadingToast = toast.loading("Connecting to GitHub...", {
       style: {
@@ -76,7 +159,7 @@ export default function Login() {
         }, 1500);
       })
       .catch((error) => {
-        console.error("GitHUb sign-in error:", error);
+        console.error("GitHub sign-in error:", error);
         toast.error(
           error.code === "auth/popup-closed-by-user"
             ? "Sign-in cancelled"
@@ -97,6 +180,20 @@ export default function Login() {
           : "bg-gradient-to-br from-indigo-50 via-blue-50 to-cyan-50"
       }`}
     >
+      {/* Toast Container - IMPORTANT: This must be added */}
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: isDark ? "#1e293b" : "#fff",
+            color: isDark ? "#fff" : "#000",
+            fontWeight: "500",
+          },
+        }}
+      />
+
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
           className={`absolute top-20 left-20 w-72 h-72 rounded-full blur-3xl opacity-20 animate-pulse ${
@@ -149,7 +246,7 @@ export default function Login() {
           </p>
         </div>
 
-        <div className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="relative group">
             <label
               className={`block text-sm font-medium mb-2 ${
@@ -242,6 +339,7 @@ export default function Login() {
               </span>
             </label>
             <button
+              type="button"
               onClick={() => console.log("Forgot password clicked")}
               className={`text-sm font-medium transition-colors ${
                 isDark
@@ -254,7 +352,7 @@ export default function Login() {
           </div>
 
           <button
-            onClick={handleSubmit}
+            type="submit"
             disabled={isLoading}
             className={`w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] ${
               isDark
@@ -271,7 +369,7 @@ export default function Login() {
               "Sign In"
             )}
           </button>
-        </div>
+        </form>
 
         <div className="relative my-8">
           <div
@@ -296,6 +394,7 @@ export default function Login() {
 
         <div className="grid grid-cols-2 gap-4">
           <button
+            type="button"
             onClick={handleGoogleSignIn}
             className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 hover:scale-105 ${
               isDark
@@ -327,6 +426,7 @@ export default function Login() {
             </svg>
           </button>
           <button
+            type="button"
             onClick={handleGitHubSignIn}
             className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 hover:scale-105 ${
               isDark

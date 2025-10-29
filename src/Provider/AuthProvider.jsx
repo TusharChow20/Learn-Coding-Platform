@@ -3,6 +3,7 @@ import {
   GithubAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
@@ -31,8 +32,9 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signOut(auth);
   };
-
-  // Observer for auth state changes
+  const loginUser = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -49,6 +51,7 @@ const AuthProvider = ({ children }) => {
     signInWithGoogle,
     logOut,
     signInWithGitHub,
+    loginUser
   };
   return (
     <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>
