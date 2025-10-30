@@ -15,7 +15,7 @@ const Courses = () => {
         setCourses(data);
         setLoading(false);
       })
-      .catch((error) => {
+      .catch(() => {
         setLoading(false);
       });
   }, []);

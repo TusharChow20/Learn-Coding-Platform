@@ -6,6 +6,7 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import { EffectCoverflow, Pagination, Autoplay } from "swiper/modules";
 import { ThemeContext } from "../Provider/ThemeContext";
+import { Link } from "react-router";
 
 const TypingText = ({ text, speed = 100, className = "", wordPause = 0 }) => {
   const [displayedText, setDisplayedText] = useState("");
@@ -91,7 +92,8 @@ const Banner = ({ data }) => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
-            <button
+            <Link
+              to={"/courses"}
               className={`px-8 py-3 font-semibold rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 ${
                 isDark
                   ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
@@ -99,16 +101,17 @@ const Banner = ({ data }) => {
               }`}
             >
               Explore Courses
-            </button>
-            <button
+            </Link>
+            <Link
+              to={"/about"}
               className={`px-8 py-3 border-2 font-semibold rounded-lg transition-all duration-300 ${
                 isDark
                   ? "border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white"
                   : "border-purple-600 text-purple-700 hover:bg-purple-600 hover:text-white"
               }`}
             >
-              Learn More
-            </button>
+              About Developer
+            </Link>
           </div>
         </div>
         <div className="order-1 lg:order-2">
